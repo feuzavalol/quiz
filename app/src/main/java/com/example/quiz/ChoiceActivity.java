@@ -1,5 +1,10 @@
 package com.example.quiz;
 
+import static android.text.TextUtils.substring;
+
+import static com.example.quiz.LaunchActivity.KEY_NAME_FILE;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,10 +19,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.quiz.widget.Bouton;
 import com.example.quiz.widget.Dropdown;
 
+import java.io.File;
+import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class ChoiceActivity extends AppCompatActivity {
 
+    Dropdown dropdownFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +39,9 @@ public class ChoiceActivity extends AppCompatActivity {
 
 
         LinearLayout mainLayout = findViewById(R.id.layout_training);
-        List<String> listChoice;
-        Dropdown dropdownFile = addDropdown(listChoice,R.string.hint_choice);
+        String[] arrChoice = fillChoice();
+        List<String> list = List.of(arrChoice);
+        dropdownFile = addDropdown(list,R.string.hint_choice);
 
         Bouton startTrainingButton = new Bouton(this,mainLayout,this::goToTrainingPage,"S'entrainer !",R.drawable.bg_button_gold);
         LinearLayout.LayoutParams layoutParamsTrainingButton = (LinearLayout.LayoutParams) startTrainingButton.getLayoutParams();
@@ -48,7 +62,26 @@ public class ChoiceActivity extends AppCompatActivity {
         return bou;
     }
     public void goToTrainingPage(View view){
-        Intent intentTraining = new Intent(getApplicationContext(), TrainingActivity.class);
-        startActivity(intentTraining);
+        String fillName = dropdownFile.getItem();
+        if (!fillName.isEmpty()){
+            Intent intentTraining = new Intent(getApplicationContext(), TrainingActivity.class);
+            intentTraining.putExtra(KEY_NAME_FILE, dropdownFile.getItem());
+            startActivity(intentTraining);
+        }
+    }
+    private String[] fillChoice(){
+        Field[] fields = R.raw.class.getFields();
+        String [] arr = new String[fields.length];
+        for (int i=0;i<fields.length;i++){
+            try {
+                arr[i] = fields[i].getName(); // e.g., my_csv_file
+                // int resId = fields[i].getInt(fields[i]);
+                // InputStream is = getResources().openRawResource(resId);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return arr;
     }
 }
