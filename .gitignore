@@ -16,4 +16,8 @@ local.properties
 /.idea/gradle.xml
 /.idea/misc.xml
 /.idea
-/app/
+/res/raw/crucial.csv
+/res/raw/everything.csv
+/res/raw/general.csv
+/res/raw/poetic.csv
+/res/raw/idioms.csv

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         layoutParamsAccountButton.setMargins(50, 75, 50, 75);
         accountButton.setLayoutParams(layoutParamsAccountButton);
 
-        Bouton trainingButton = new Bouton(this,mainLayout,this::goToTrainingPage,"Entraînement",R.drawable.bg_button_purple);
+        Bouton trainingButton = new Bouton(this,mainLayout,this::goToChoicePage,"Entraînement",R.drawable.bg_button_purple);
         ConstraintLayout.LayoutParams layoutParamsTrainingButton = (ConstraintLayout.LayoutParams) trainingButton.getLayoutParams();
         layoutParamsTrainingButton.topToTop = R.id.main;
         layoutParamsTrainingButton.startToStart = R.id.main;
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
         startActivity(intentAccount);
     }
-    public void goToTrainingPage(View view){
-        Intent intentTraining = new Intent(getApplicationContext(), TrainingActivity.class);
-        startActivity(intentTraining);
+    public void goToChoicePage(View view){
+        Intent intentChoice = new Intent(getApplicationContext(), ChoiceActivity.class);
+        startActivity(intentChoice);
     }
 }
