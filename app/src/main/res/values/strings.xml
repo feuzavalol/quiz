@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Quiz</string>
+    <string name="choice_title">Choix de l\'entrainement</string>
+    <string name="hint_choice">Choix du fichier</string>
 </resources>
