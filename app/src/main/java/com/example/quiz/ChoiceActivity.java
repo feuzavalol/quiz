@@ -1,36 +1,31 @@
 package com.example.quiz;
 
-import static android.text.TextUtils.substring;
-
+import static com.example.quiz.LaunchActivity.KEY_LANGUAGE;
 import static com.example.quiz.LaunchActivity.KEY_NAME_FILE;
+import static com.example.quiz.LaunchActivity.KEY_NB_CARDS;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.quiz.widget.Bouton;
 import com.example.quiz.widget.Dropdown;
 
-import java.io.File;
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class ChoiceActivity extends AppCompatActivity {
 
     Dropdown dropdownFile;
+    Dropdown dropdownLanguage;
+    EditText nbCardsEditText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +37,16 @@ public class ChoiceActivity extends AppCompatActivity {
         String[] arrChoice = fillChoice();
         List<String> list = List.of(arrChoice);
         dropdownFile = addDropdown(list,R.string.hint_choice);
+        String[] languageChoice = {"Français","Autre"};
+        dropdownLanguage = addDropdown(List.of(languageChoice),R.string.hint_language);
+        nbCardsEditText = new EditText(this);
+        nbCardsEditText.setHint(R.string.hint_nb);
+        nbCardsEditText.setText(R.string.default_cards_number);
+        mainLayout.addView(nbCardsEditText);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) nbCardsEditText.getLayoutParams();
+        params.setMargins(50, 20, 0, 20);
+        params.gravity  = Gravity.CENTER;
+        nbCardsEditText.setLayoutParams(params);
 
         Bouton startTrainingButton = new Bouton(this,mainLayout,this::goToTrainingPage,"S'entrainer !",R.drawable.bg_button_gold);
         LinearLayout.LayoutParams layoutParamsTrainingButton = (LinearLayout.LayoutParams) startTrainingButton.getLayoutParams();
@@ -62,10 +67,21 @@ public class ChoiceActivity extends AppCompatActivity {
         return bou;
     }
     public void goToTrainingPage(View view){
-        String fillName = dropdownFile.getItem();
-        if (!fillName.isEmpty()){
+        String fileName = dropdownFile.getItem();
+        String languageChoosed = dropdownLanguage.getItem();
+        String temp = nbCardsEditText.getText().toString();
+        int nbCards;
+        if (temp.isEmpty()) {
+            nbCards = 0;
+        }
+        else{
+            nbCards = Integer.parseInt(temp);
+        }
+        if (!fileName.isEmpty() && !languageChoosed.isEmpty() && nbCards != 0){
             Intent intentTraining = new Intent(getApplicationContext(), TrainingActivity.class);
-            intentTraining.putExtra(KEY_NAME_FILE, dropdownFile.getItem());
+            intentTraining.putExtra(KEY_NAME_FILE, fileName);
+            intentTraining.putExtra(KEY_NB_CARDS,nbCards);
+            intentTraining.putExtra(KEY_LANGUAGE,languageChoosed);
             startActivity(intentTraining);
         }
     }
@@ -75,9 +91,6 @@ public class ChoiceActivity extends AppCompatActivity {
         for (int i=0;i<fields.length;i++){
             try {
                 arr[i] = fields[i].getName(); // e.g., my_csv_file
-                // int resId = fields[i].getInt(fields[i]);
-                // InputStream is = getResources().openRawResource(resId);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

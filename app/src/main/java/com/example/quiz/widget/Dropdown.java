@@ -1,28 +1,21 @@
 package com.example.quiz.widget;
 
-import android.content.Context;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.GridLayout;
 
-import com.example.quiz.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
 public class Dropdown extends GridLayout {
-
-    EditText edittext;
-    TextInputLayout textimputlayout;
     TextInputLayout liste_deroulante;
     AutoCompleteTextView auto_comp;
     ArrayAdapter<String> adapter;
 
-    public Dropdown(Context context, List<String> liste_choix, String hint) {
+    public Dropdown(android.content.Context context, List<String> liste_choix, String hint) {
         super(context);
         // setBackgroundResource();
         setColumnCount(2);
@@ -56,15 +49,11 @@ public class Dropdown extends GridLayout {
         return liste_deroulante.getEditText().getText().toString();
     }
 
-    public double getAmount() {
-        return Double.parseDouble(edittext.getText().toString());
-    }
+    //public double getAmount() {
+    //    return Double.parseDouble(edittext.getText().toString());
+    //}
 
-    public void setItem(String humanName) {
-        liste_deroulante.getEditText().setText(humanName);
-    }
-
-    public void setAmount(double amount) {
-        textimputlayout.getEditText().setText(String.valueOf(amount));
-    }
+    //public void setItem(String humanName) {
+    //    liste_deroulante.getEditText().setText(humanName);
+    //}
 }

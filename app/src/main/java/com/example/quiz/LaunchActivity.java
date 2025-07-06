@@ -1,6 +1,5 @@
 package com.example.quiz;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -10,6 +9,9 @@ import java.lang.reflect.Field;
 
 public class LaunchActivity extends AppCompatActivity {
     static String KEY_NAME_FILE = "FileName";
+    static String KEY_NB_CARDS = "NbCards";
+    static String KEY_LANGUAGE = "Language";
+    static String KEY_FINAL = "Final";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

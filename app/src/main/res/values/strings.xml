@@ -2,4 +2,8 @@
     <string name="app_name">Quiz</string>
     <string name="choice_title">Choix de l\'entrainement</string>
     <string name="hint_choice">Choix du fichier</string>
+    <string name="hint_language">Choix de la langue de la question</string>
+    <string name="hint_nb">Choix du nombre de cartes</string>
+    <string name="hint_answer">Votre réponse…</string>
+    <string name="default_cards_number">10</string>
 </resources>
